@@ -1,12 +1,13 @@
 class BooksController < ApplicationController
   # before_action :set_book, only: [:show, :destory, :create]
   
-  def def index
+  def index
     @books = Book.all
     render json: @books
   end
   
-  def def show
+  def show
+    @book = Book.find(params[:id])
     render json: @book
   end
 
@@ -20,7 +21,7 @@ class BooksController < ApplicationController
     end
   end
 
-  def :destroy
+  def destroy
     @book.destroy
   end
 
