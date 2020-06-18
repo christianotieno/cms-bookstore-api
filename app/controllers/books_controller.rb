@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
-
   def index
     @books = Book.all
     render json: {
@@ -39,7 +38,6 @@ class BooksController < ApplicationController
   def destroy
     @book = Book.find(params[:id])
     @book.destroy
-
 
     render json: {
       status: 'Success',
