@@ -1,39 +1,56 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
-  # before_action :set_book, only: [:show, :destory, :create]
 
   def index
     @books = Book.all
-    render json: @books
+    render json: {
+      status: 'Success',
+      data: @books
+    }, status: :ok
   end
 
   def show
     @book = Book.find(params[:id])
-    render json: @book
+    render json: {
+      status: 'Success',
+      data: @book
+    }, status: :ok
   end
 
   def create
     @book = Book.new(book_params)
 
-    if @movie.save
-      render json: @book, status: :created
+    if @book.save
+      render json: {
+        status: 'Success',
+        message: 'Book created',
+        data: @book
+      }, status: :ok
     else
-      render json: @book.errors, status: :unprocessable_entity
+      render json: {
+        status: 'Error',
+        message: 'Error creating book',
+        data: @book.errors
+      }, status: :unprocessable_entity
     end
   end
 
   def destroy
+    @book = Book.find(params[:id])
     @book.destroy
+
+
+    render json: {
+      status: 'Success',
+      message: 'Book deleted',
+      data: @book
+    }, status: :ok
   end
 
   private
 
-  # def set_book
-  #   @book = Book.find(params[:id])
-  # end
-
   def book_params
-    params.require(:book).permit(:title, :author, :category)
+    params.permit(:title, :category)
   end
 end
